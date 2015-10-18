@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 my $package = 'Test::MockObject';
-use Test::More tests => 103;
+use Test::More tests => 104;
 use_ok( $package );
 
 # new()
@@ -249,3 +249,10 @@ isa_ok( $subhash, 'HASH', '_subs() should return something that' );
 $subhash->{foo} = 'bar';
 is_deeply( Test::MockObject::_subs( 'key' ), { foo => 'bar' },
 	'... always for the same key' );
+
+# num_of_calls
+$mock->mock('quux');
+$mock->quux for (1..4);
+
+cmp_ok( $mock->num_of_calls('quux'), '==', 4,
+	'num_of_calls() should return the correct number of calls' );

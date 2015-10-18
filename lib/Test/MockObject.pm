@@ -158,6 +158,15 @@ sub called
     return 0;
 }
 
+sub num_of_calls
+{
+    my ($self, $sub) = @_;
+
+    my $count = grep { $_->[0] eq $sub } @{ _calls( $self ) };
+
+    return $count;
+}
+
 sub clear
 {
     my $self             = shift;
@@ -681,6 +690,10 @@ used C<set_isa()> first.
 Checks to see if something has called a named method on the object.  This
 returns a boolean value.  The current implementation does not scale especially
 well, so use this sparingly if you need to search through hundreds of calls.
+
+=item * C<num_of_calls(I<name>)
+
+Returns the number of times a method was called on the object.
 
 =item * C<clear()>
 
